@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # TECHNOLOGY Multi-Language Online Compiler & Web IDE
 
 A modern, full-stack **Online Compiler & Web Playground** built with a **Java HTTP backend** and a **React + Monaco Editor frontend**. 
@@ -111,3 +112,6 @@ npm run dev
 | Shortcut | Action |
 | :--- | :--- |
 | <kbd>Ctrl</kbd> + <kbd>Enter</kbd> | Run & Execute Current Code |
+=======
+# ProPlacement-Online-Compiler
+>>>>>>> 7dd7bfbe29eb0e9e0cf94bf780b6de24f6f50be0
