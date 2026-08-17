@@ -1,117 +1,235 @@
-<<<<<<< HEAD
-# TECHNOLOGY Multi-Language Online Compiler & Web IDE
+# ProPlacement Online Compiler & Web Playground
 
-A modern, full-stack **Online Compiler & Web Playground** built with a **Java HTTP backend** and a **React + Monaco Editor frontend**. 
+<div align="center">
 
-Supports compiling, running, and previewing **Java**, **Python**, **C++**, **C**, **JavaScript (Node.js)**, **React.js**, and **HTML / CSS / JS** directly in the browser with **Theme Switching** (Dark & Light) and customizable file naming (e.g. `Solution.java`).
+![ProPlacement Banner](https://img.shields.io/badge/ProPlacement-Online_Compiler-3b82f6?style=for-the-badge&logo=codeforces&logoColor=white)
+![Java](https://img.shields.io/badge/Backend-Java_21-orange?style=for-the-badge&logo=openjdk&logoColor=white)
+![React](https://img.shields.io/badge/Frontend-React_19_+_Vite-61dafb?style=for-the-badge&logo=react&logoColor=black)
+![Monaco](https://img.shields.io/badge/Editor-Monaco_Editor-blue?style=for-the-badge&logo=visualstudiocode&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
----
+**Practice • Prepare • Get Placed**
 
-## 🚀 Key Features
+*A modern, full-stack, multi-language Online Compiler, Database Playground, and Web Sandbox designed for placement preparation, competitive programming, and rapid code prototyping.*
 
-* **Multi-Language Support**:
-  * ☕ **Java 21**: Compiles `Solution.java` via `javac` & runs via `java`.
-  * 🐍 **Python 3**: Executes `solution.py` via Python runtime.
-  * ⚡ **C++ / C**: Compiles and executes `solution.cpp` / `solution.c`.
-  * 🟨 **JavaScript (Node.js)**: Runs backend JS scripts via `node`.
-  * ⚛️ **React.js Playground**: Live interactive React component preview (`App.jsx`) with Babel standalone compilation.
-  * 🌐 **HTML / CSS / JS Web Sandbox**: Live interactive browser preview (`index.html`).
-* **Theme Switching**: Seamless one-click toggle between **Dark Mode** and **Light Mode** across the Monaco Editor, Output Console, and Navbar.
-* **Programiz-Style Clean Workspace**: Split-screen editor on the left and output/live preview on the right.
-* **Keyboard Shortcut**: Run any program instantly with <kbd>Ctrl</kbd> + <kbd>Enter</kbd>.
-* **Editor Features**: Fixed 14px font, Fira Code monospace, line numbering, syntax highlighting, and auto-bracket pairing.
-* **Utilities**: One-click **Copy Code**, **Copy Output**, **Clear Console**, and **Download File** (with language-specific file extensions).
-* **Backend Health Monitoring**: Live status indicator in the top navigation bar.
+</div>
 
 ---
 
-## 📁 Project Structure
+## Overview
 
-```text
-EntryLevel JavaCompiler/
-│
-├── backend/                                  # Java HTTP Backend Server
-│   ├── JavaCompilerServer.java               # HTTP server, multi-language compiler & subprocess runner
-│   ├── JavaCompilerServer.class              # Compiled bytecode
-│   ├── JavaCompilerServer$CompileHandler.class
-│   ├── JavaCompilerServer$HealthHandler.class
-│   └── temp_exec/                            # Sandboxed directory for temporary job executions
-│
-├── frontend/                                 # React Frontend (Vite + Monaco Editor)
-│   ├── index.html                            # HTML root file
-│   ├── package.json                          # Dependencies & scripts
-│   ├── vite.config.js                        # Vite configuration
-│   ├── src/
-│   │   ├── main.jsx                          # React DOM entry point
-│   │   ├── App.jsx                           # Main layout & compiler state management
-│   │   ├── index.css                         # Global CSS & theme design variables
-│   │   ├── App.css                           # Utility styles
-│   │   ├── components/
-│   │   │   ├── Navbar.jsx                    # Header with Language Selector, Run, Clear, Theme, Copy, Download
-│   │   │   ├── CodeEditor.jsx                # Monaco Editor (14px font, dynamic languages & themes)
-│   │   │   ├── ConsoleOutput.jsx             # Terminal output console (dark & light theme)
-│   │   │   └── WebPreview.jsx                # Live sandboxed preview for React.js & HTML/CSS/JS
-│   │   └── utils/
-│   │       └── defaultTemplates.js           # Multi-language starter templates & configs
-│
-├── scratch/                                  # Testing & verification scripts
-│   ├── test_api.js                           # Java basic test
-│   ├── test_escape.js                        # Escape character test
-│   ├── test_stdin.js                         # Stdin test
-│   └── test_multilang.js                     # Multi-language API test
-│
-└── README.md                                 # Project documentation
+**ProPlacement Online Compiler** is a lightweight, high-performance web-based IDE that allows students and developers to write, compile, run, and preview code across 9+ programming languages, databases, and frontend environments right inside their browser.
+
+Built with a fast, zero-dependency **Java HTTP backend** with process sandboxing and custom in-memory SQL/NoSQL engines, paired with a sleek **React 19 + Monaco Editor** frontend with dark/light theming.
+
+---
+
+##  Key Features
+
+### Multi-Language & Multi-Engine Support
+* **Java 21**: Automatic class detection, compilation with `javac`, and sandboxed execution via `java`.
+* **Python 3**: Rapid execution via Python interpreter with STDIN support.
+* **C++ (C++20)** & **C (C11)**: Compiled and executed natively with `g++` / `gcc`.
+* **JavaScript (Node.js 20)**: Server-side JS execution with Node.js runtime.
+* **MySQL 8.0**: Built-in in-memory SQL engine supporting `CREATE TABLE`, `INSERT`, `SELECT`, `WHERE`, `ORDER BY`, and `GROUP BY`.
+* **Oracle SQL (21c)**: Built-in schema & query engine with Oracle SQL*Plus syntax support.
+* **MongoDB 7.0**: Built-in document/NoSQL engine with `insertMany`, `find`, filtering (`$gte`, etc.), and aggregation pipelines (`$match`, `$group`, `$sort`).
+* **React.js Interactive Playground**: Live client-side React component preview (`App.jsx`) with Babel standalone in-browser compilation.
+* **HTML / CSS / JS Sandbox**: Live browser DOM sandbox preview (`index.html`) with instant rendering.
+
+---
+
+### Modern UI & Developer Experience
+* **Dark & Light Mode**: One-click instant theme toggle across the Monaco Editor, navigation bar, and output terminal.
+* **Keyboard Shortcut**: Run any code instantly with <kbd>Ctrl</kbd> + <kbd>Enter</kbd> (or <kbd>Cmd</kbd> + <kbd>Enter</kbd> on macOS).
+* **Monaco Editor Power**: Syntax highlighting, bracket matching, line numbering, auto-indentation, and dynamic language-specific filenames (e.g. `Solution.java`, `solution.py`, `query.sql`, `App.jsx`).
+* **Interactive STDIN Input**: Custom input console for competitive programming and interactive CLI programs.
+* **Execution Metrics & Health Monitoring**: Live compile time, execution time, exit codes, and real-time backend health check status indicator.
+* **Productivity Actions**: One-click **Copy Code**, **Copy Output**, **Clear Output**, **Reset Template**, and **Download File** with matching language extensions.
+
+---
+
+## System Architecture
+
+```mermaid
+graph TD
+    User([User Browser])
+    
+    subgraph Frontend ["Frontend (React 19 + Vite)"]
+        Navbar[Navbar & Controls]
+        Monaco[Monaco Editor]
+        STDIN[Custom Input Area]
+        Console[Terminal Output / Status]
+        Preview[Live Web/React Preview Iframe]
+    end
+
+    subgraph Backend ["Backend (Java 21 HTTP Server :8080)"]
+        Router{Request Router}
+        HealthAPI["/api/health"]
+        CompileAPI["/api/compile"]
+        
+        subgraph Runners ["Execution Runners & Sandboxes"]
+            JavaRunner["Java Runner (javac + java)"]
+            PyRunner["Python 3 Runner"]
+            CppRunner["C / C++ Runner (gcc / g++)"]
+            NodeRunner["Node.js Runner"]
+            SqlEngine["In-Memory SQL Engine (MySQL / Oracle)"]
+            MongoEngine["In-Memory Mongo NoSQL Engine"]
+        end
+        
+        TempDir[(Isolated Temp Exec Directories)]
+    end
+
+    User --> Monaco
+    User --> Navbar
+    Monaco --> Router
+    STDIN --> Router
+    Router --> CompileAPI
+    Navbar --> HealthAPI
+    
+    CompileAPI --> JavaRunner & PyRunner & CppRunner & NodeRunner & SqlEngine & MongoEngine
+    JavaRunner & PyRunner & CppRunner & NodeRunner --> TempDir
+    
+    CompileAPI --> Console
+    Monaco -.-> Preview
 ```
 
 ---
 
-## 📌 Main Files & Descriptions
+## Project Structure
 
-| File | Purpose |
-| :--- | :--- |
-| [`backend/JavaCompilerServer.java`](file:///c:/MAJOR%20PROJECT/EntryLevel%20JavaCompiler/backend/JavaCompilerServer.java) | Standalone Java HTTP server on port 8080. Compiles/executes Java, Python, C++, C, and JavaScript in sandboxed directories with timeout protection and accurate JSON parsing. |
-| [`frontend/src/App.jsx`](file:///c:/MAJOR%20PROJECT/EntryLevel%20JavaCompiler/frontend/src/App.jsx) | Main React component. Manages multi-language code buffers, execution requests, theme switching, and split layout view. |
-| [`frontend/src/components/Navbar.jsx`](file:///c:/MAJOR%20PROJECT/EntryLevel%20JavaCompiler/frontend/src/components/Navbar.jsx) | Header bar with language selection dropdown, **Run** button (<kbd>Ctrl+Enter</kbd>), **Clear**, **Theme Toggle**, **Copy**, and **Download**. |
-| [`frontend/src/components/CodeEditor.jsx`](file:///c:/MAJOR%20PROJECT/EntryLevel%20JavaCompiler/frontend/src/components/CodeEditor.jsx) | Monaco Editor wrapper configured for 14px font, customizable file names (`Solution.java`, `solution.py`, `App.jsx`), and theme adaptability. |
-| [`frontend/src/components/ConsoleOutput.jsx`](file:///c:/MAJOR%20PROJECT/EntryLevel%20JavaCompiler/frontend/src/components/ConsoleOutput.jsx) | Programiz-style terminal output console supporting both dark and light styling with status badges and execution metrics. |
-| [`frontend/src/components/WebPreview.jsx`](file:///c:/MAJOR%20PROJECT/EntryLevel%20JavaCompiler/frontend/src/components/WebPreview.jsx) | Interactive sandboxed iframe preview runner for **React.js** and **HTML / CSS / JS** web code. |
-| [`frontend/src/utils/defaultTemplates.js`](file:///c:/MAJOR%20PROJECT/EntryLevel%20JavaCompiler/frontend/src/utils/defaultTemplates.js) | Defines languages, filenames, versions, and starter code for all supported languages. |
+```text
+ProPlacement Online Compiler/
+├── backend/
+│   ├── JavaCompilerServer.java          # Java HTTP server, multi-language compiler & in-memory DB engines
+│   ├── JavaCompilerServer.class         # Compiled server class
+│   ├── temp_exec/                       # Sandboxed temporary execution directories (auto-cleaned)
+│   └── tools/                           # Optional native tools & compilers
+│
+├── frontend/
+│   ├── index.html                       # Frontend entry HTML
+│   ├── package.json                     # Frontend dependencies & scripts
+│   ├── vite.config.js                   # Vite configuration
+│   ├── src/
+│   │   ├── main.jsx                     # React root mount
+│   │   ├── App.jsx                      # Main application state & split layout
+│   │   ├── App.css                      # Layout styling
+│   │   ├── index.css                    # Design tokens & global CSS
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx               # Header, language selector, run/theme buttons
+│   │   │   ├── CodeEditor.jsx           # Monaco Editor wrapper
+│   │   │   ├── ConsoleOutput.jsx        # Terminal output display with execution stats
+│   │   │   └── WebPreview.jsx           # Sandboxed iframe preview for React/HTML
+│   │   └── utils/
+│   │       └── defaultTemplates.js      # Starter templates for all 9+ languages
+│
+├── scratch/                             # Integration & test scripts
+├── LICENSE                              # MIT License
+└── README.md                            # Project documentation
+```
 
 ---
 
-## ⚙️ Requirements
+## Prerequisites
 
-* **JDK 17+ or 21**
-* **Node.js 18+** & **npm**
-* *(Optional)* **Python 3**, **g++ / gcc** (for Python, C++, and C compilation)
+* **Java Development Kit (JDK)**: Java 17 or Java 21+ installed and configured on your `PATH`.
+* **Node.js**: v18+ and `npm` installed.
+* *(Optional for native compilation)*:
+  * **Python 3**: For running Python solutions (`python --version`).
+  * **GCC / G++ (MinGW on Windows / GCC on Linux/macOS)**: For C/C++ compilation.
 
 ---
 
-## ▶️ How to Run
+## Quick Start Guide
 
-### 1. Start Backend Server
+### 1. Clone the Repository
+```bash
+git clone https://github.com/ghavate-n11/ProPlacement-Online-Compiler.git
+cd "ProPlacement Online Compiler"
+```
+
+### 2. Start the Backend Server
 ```bash
 cd backend
 javac -encoding UTF-8 JavaCompilerServer.java
-java "-Dfile.encoding=UTF-8" JavaCompilerServer
+java -Dfile.encoding=UTF-8 JavaCompilerServer
 ```
-*Backend runs on `http://localhost:8080`.*
+> Server will start listening on `http://localhost:8080` with endpoints `/api/health` and `/api/compile`.
 
-### 2. Start Frontend Application
+### 3. Start the Frontend Application
+In a new terminal window:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-*Frontend runs on `http://localhost:5173`.*
+> Frontend will launch at `http://localhost:5173`. Open your browser and start coding!
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## API Reference
 
-| Shortcut | Action |
+### Health Check
+- **Endpoint**: `GET /api/health`
+- **Response**:
+```json
+{
+  "status": "OK",
+  "javaVersion": "21.0.x"
+}
+```
+
+### Compile & Execute Code
+- **Endpoint**: `POST /api/compile`
+- **Headers**: `Content-Type: application/json`
+- **Request Body**:
+```json
+{
+  "code": "public class Solution { public static void main(String[] args) { System.out.println(\"Hello World\"); } }",
+  "language": "java",
+  "input": ""
+}
+```
+- **Response Body**:
+```json
+{
+  "status": "SUCCESS",
+  "output": "Hello World\n",
+  "error": "",
+  "compileTimeMs": 240,
+  "executionTimeMs": 65,
+  "exitCode": 0
+}
+```
+
+---
+
+## Shortcuts & Controls
+
+| Action | Shortcut / Control |
 | :--- | :--- |
-| <kbd>Ctrl</kbd> + <kbd>Enter</kbd> | Run & Execute Current Code |
-=======
-# ProPlacement-Online-Compiler
->>>>>>> 7dd7bfbe29eb0e9e0cf94bf780b6de24f6f50be0
+| **Run Code** | <kbd>Ctrl</kbd> + <kbd>Enter</kbd> (or <kbd>Cmd</kbd> + <kbd>Enter</kbd>) / **Run** Button |
+| **Toggle Dark / Light Theme** | Click Theme Icon in Navbar |
+| **Copy Code / Output** | Quick copy button in Editor & Console headers |
+| **Download Code** | Download button in Navbar (auto-names with extension) |
+| **Clear Console** | Clear button in Console header |
+| **Interactive Web Preview** | Auto-switches to live iframe when React or HTML is selected |
+
+---
+
+## Security & Isolation
+
+- **Timeout Protection**: All subprocess execution jobs are capped at a strict 7-second runtime limit to prevent infinite loops and resource starvation.
+- **Isolated Job Directories**: Each execution request is assigned a unique UUID sandbox directory under `temp_exec/` which is automatically deleted after output collection.
+
+---
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](file:///c:/MAJOR%20PROJECT/ProPlacement%20Online%20Compiler/LICENSE) file for details.
+
+---
+
+<div align="center">
+  <b>Built for campus placement prep, interviews, and coding excellence 🎯</b>
+</div>
