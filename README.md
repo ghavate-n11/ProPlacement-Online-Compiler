@@ -228,8 +228,13 @@ npm run dev
 
 This project is licensed under the **MIT License** - see the [LICENSE](file:///c:/MAJOR%20PROJECT/ProPlacement%20Online%20Compiler/LICENSE) file for details.
 
+Copyright &copy; 2026 **NilTech**. All rights reserved.
+
 ---
 
 <div align="center">
-  <b>Built for campus placement prep, interviews, and coding excellence 🎯</b>
+  <b>Built by NilTech for campus placement prep, interviews, and coding excellence 🎯</b>
+  <br>
+  <sub>&copy; 2026 NilTech. All rights reserved.</sub>
 </div>
+
