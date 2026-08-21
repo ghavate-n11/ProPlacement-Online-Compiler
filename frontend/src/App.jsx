@@ -5,7 +5,7 @@ import ConsoleOutput from './components/ConsoleOutput';
 import WebPreview from './components/WebPreview';
 import { LANGUAGE_CONFIG } from './utils/defaultTemplates';
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
 export default function App() {
   const [selectedLanguage, setSelectedLanguage] = useState('java');

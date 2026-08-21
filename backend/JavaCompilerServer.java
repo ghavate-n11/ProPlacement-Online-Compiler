@@ -13,7 +13,17 @@ import java.util.regex.Pattern;
 
 public class JavaCompilerServer {
 
-    private static final int PORT = 8080;
+    private static int getPort() {
+        String envPort = System.getenv("PORT");
+        if (envPort != null && !envPort.trim().isEmpty()) {
+            try {
+                return Integer.parseInt(envPort.trim());
+            } catch (NumberFormatException ignored) {}
+        }
+        return 8080;
+    }
+
+    private static final int PORT = getPort();
     private static final int TIMEOUT_SECONDS = 7;
     private static final Path TEMP_BASE_DIR = Paths.get("temp_exec");
 
@@ -22,7 +32,8 @@ public class JavaCompilerServer {
             Files.createDirectories(TEMP_BASE_DIR);
         }
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
+        int port = getPort();
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         ExecutorService executor = Executors.newFixedThreadPool(10);
         server.setExecutor(executor);
 
@@ -33,7 +44,7 @@ public class JavaCompilerServer {
         System.out.println("=================================================");
         System.out.println("   ProPlacement Multi-Language Compiler Server   ");
         System.out.println("          Practice • Prepare • Get Placed        ");
-        System.out.println("   Listening on: http://localhost:" + PORT + "       ");
+        System.out.println("   Listening on: http://0.0.0.0:" + port + "          ");
         System.out.println("   Java: " + System.getProperty("java.version"));
         System.out.println("=================================================");
     }
@@ -225,7 +236,8 @@ public class JavaCompilerServer {
     private static String executePython(Path jobDir, String code, String stdinInput) throws Exception {
         Path pyFile = jobDir.resolve("solution.py");
         Files.writeString(pyFile, code, StandardCharsets.UTF_8);
-        return runSubprocess(jobDir, new String[]{"python", "-u", "solution.py"}, stdinInput, 0);
+        String pythonCmd = findPythonExecutable();
+        return runSubprocess(jobDir, new String[]{pythonCmd, "-u", "solution.py"}, stdinInput, 0);
     }
 
     // JavaScript Execution (Node.js)
@@ -239,18 +251,18 @@ public class JavaCompilerServer {
     private static String executeCpp(Path jobDir, String code, String stdinInput) throws Exception {
         Path cppFile = jobDir.resolve("solution.cpp");
         Files.writeString(cppFile, code, StandardCharsets.UTF_8);
-        String exeName = isWindows() ? "solution.exe" : "./solution";
+        String outputBinary = isWindows() ? "solution.exe" : "solution";
 
         long compileStart = System.currentTimeMillis();
         String gppCmd = findGppExecutable();
-        ProcessBuilder gppBuilder = createProcessBuilder(new String[]{gppCmd, "-O2", "-std=c++20", "solution.cpp", "-o", "solution.exe"});
+        ProcessBuilder gppBuilder = createProcessBuilder(new String[]{gppCmd, "-O2", "-std=c++20", "solution.cpp", "-o", outputBinary});
         gppBuilder.directory(jobDir.toFile());
         
         Process gppProcess;
         try {
             gppProcess = gppBuilder.start();
         } catch (IOException e) {
-            return buildJsonResponse("SYSTEM_ERROR", "", "C++ compiler is not available on the server.", 0, 0, -1);
+            return buildJsonResponse("SYSTEM_ERROR", "", "C++ compiler (" + gppCmd + ") is not available on the server.", 0, 0, -1);
         }
 
         ExecutorService gppPool = Executors.newSingleThreadExecutor();
@@ -273,25 +285,27 @@ public class JavaCompilerServer {
             return buildJsonResponse("COMPILATION_ERROR", "", gppErr, compileTimeMs, 0, gppExit);
         }
 
-        return runSubprocess(jobDir, new String[]{jobDir.resolve(exeName).toString()}, stdinInput, compileTimeMs);
+        Path binaryPath = jobDir.resolve(outputBinary);
+        binaryPath.toFile().setExecutable(true, false);
+        return runSubprocess(jobDir, new String[]{binaryPath.toAbsolutePath().toString()}, stdinInput, compileTimeMs);
     }
 
     // C Execution
     private static String executeC(Path jobDir, String code, String stdinInput) throws Exception {
         Path cFile = jobDir.resolve("solution.c");
         Files.writeString(cFile, code, StandardCharsets.UTF_8);
-        String exeName = isWindows() ? "solution.exe" : "./solution";
+        String outputBinary = isWindows() ? "solution.exe" : "solution";
 
         long compileStart = System.currentTimeMillis();
         String gccCmd = findGccExecutable();
-        ProcessBuilder gccBuilder = createProcessBuilder(new String[]{gccCmd, "-o", "solution.exe", "solution.c"});
+        ProcessBuilder gccBuilder = createProcessBuilder(new String[]{gccCmd, "-o", outputBinary, "solution.c"});
         gccBuilder.directory(jobDir.toFile());
 
         Process gccProcess;
         try {
             gccProcess = gccBuilder.start();
         } catch (IOException e) {
-            return buildJsonResponse("SYSTEM_ERROR", "", "C compiler is not available on the server.", 0, 0, -1);
+            return buildJsonResponse("SYSTEM_ERROR", "", "C compiler (" + gccCmd + ") is not available on the server.", 0, 0, -1);
         }
 
         ExecutorService gccPool = Executors.newSingleThreadExecutor();
@@ -314,7 +328,9 @@ public class JavaCompilerServer {
             return buildJsonResponse("COMPILATION_ERROR", "", gccErr, compileTimeMs, 0, gccExit);
         }
 
-        return runSubprocess(jobDir, new String[]{jobDir.resolve(exeName).toString()}, stdinInput, compileTimeMs);
+        Path binaryPath = jobDir.resolve(outputBinary);
+        binaryPath.toFile().setExecutable(true, false);
+        return runSubprocess(jobDir, new String[]{binaryPath.toAbsolutePath().toString()}, stdinInput, compileTimeMs);
     }
 
     private static Path getToolsDir() {
@@ -347,6 +363,20 @@ public class JavaCompilerServer {
             return toolGcc.toString();
         }
         return "gcc";
+    }
+
+    private static String findPythonExecutable() {
+        if (isWindows()) {
+            return "python";
+        }
+        // In Linux/Docker, check if python3 exists first
+        try {
+            Process p = new ProcessBuilder("python3", "--version").start();
+            if (p.waitFor(1, TimeUnit.SECONDS) && p.exitValue() == 0) {
+                return "python3";
+            }
+        } catch (Exception ignored) {}
+        return "python";
     }
 
     private static ProcessBuilder createProcessBuilder(String[] command) {

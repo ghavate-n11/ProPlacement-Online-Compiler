@@ -1,5 +1,5 @@
 async function test() {
-  const res = await fetch('http://localhost:8080/api/compile', {
+  const res = await fetch('https://pro-placement-online-compiler-bc3y.vercel.app//api/compile', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

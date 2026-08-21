@@ -1,0 +1,11 @@
+.git
+.gitignore
+frontend/node_modules
+frontend/dist
+temp_exec
+scratch
+backend/temp_exec
+backend/tools
+*.class
+*.exe
+*.zip
